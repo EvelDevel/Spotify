@@ -29,6 +29,7 @@
 		FB3204FB25F4FA8C000C82A3 /* AudioTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3204FA25F4FA8C000C82A3 /* AudioTrack.swift */; };
 		FB3204FE25F4FA94000C82A3 /* Artist.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3204FD25F4FA94000C82A3 /* Artist.swift */; };
 		FB32050125F4FAA0000C82A3 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB32050025F4FAA0000C82A3 /* UserProfile.swift */; };
+		FBD3E03C25FCD0110035BDC1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FBD3E03B25FCD0110035BDC1 /* Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		FB3204FA25F4FA8C000C82A3 /* AudioTrack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioTrack.swift; sourceTree = "<group>"; };
 		FB3204FD25F4FA94000C82A3 /* Artist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Artist.swift; sourceTree = "<group>"; };
 		FB32050025F4FAA0000C82A3 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		FBD3E03B25FCD0110035BDC1 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +152,7 @@
 				FB3204AD25F4F2AB000C82A3 /* AppDelegate.swift */,
 				FB3204AF25F4F2AB000C82A3 /* SceneDelegate.swift */,
 				FB3204B625F4F2AC000C82A3 /* Assets.xcassets */,
+				FBD3E03B25FCD0110035BDC1 /* Extensions.swift */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 				FB3204D825F4F9A2000C82A3 /* AuthViewController.swift in Sources */,
 				FB3204AE25F4F2AB000C82A3 /* AppDelegate.swift in Sources */,
 				FB32050125F4FAA0000C82A3 /* UserProfile.swift in Sources */,
+				FBD3E03C25FCD0110035BDC1 /* Extensions.swift in Sources */,
 				FB3204D225F4F972000C82A3 /* LibraryViewController.swift in Sources */,
 				FB3204FE25F4FA94000C82A3 /* Artist.swift in Sources */,
 				FB3204E825F4F9EE000C82A3 /* PlaylistViewController.swift in Sources */,
