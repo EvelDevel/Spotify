@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2DE2C8048DB94B23F25EF8BA /* Pods_Spotify.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8D422151CD9F94AE58ED8EA /* Pods_Spotify.framework */; };
+		FB07A3362631346E00E8461D /* AlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB07A3352631346E00E8461D /* AlbumViewController.swift */; };
 		FB3204AE25F4F2AB000C82A3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3204AD25F4F2AB000C82A3 /* AppDelegate.swift */; };
 		FB3204B025F4F2AB000C82A3 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3204AF25F4F2AB000C82A3 /* SceneDelegate.swift */; };
 		FB3204B225F4F2AB000C82A3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB3204B125F4F2AB000C82A3 /* HomeViewController.swift */; };
@@ -50,6 +51,7 @@
 		007F070BE985454FAE60DDA0 /* Pods-Spotify.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spotify.debug.xcconfig"; path = "Target Support Files/Pods-Spotify/Pods-Spotify.debug.xcconfig"; sourceTree = "<group>"; };
 		0F31C9E9E027ABC78583B7B8 /* Pods-Spotify.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Spotify.release.xcconfig"; path = "Target Support Files/Pods-Spotify/Pods-Spotify.release.xcconfig"; sourceTree = "<group>"; };
 		F8D422151CD9F94AE58ED8EA /* Pods_Spotify.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Spotify.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB07A3352631346E00E8461D /* AlbumViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumViewController.swift; sourceTree = "<group>"; };
 		FB3204AA25F4F2AB000C82A3 /* Spotify.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Spotify.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FB3204AD25F4F2AB000C82A3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FB3204AF25F4F2AB000C82A3 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -239,6 +241,7 @@
 				FB3204E425F4F9DF000C82A3 /* PlayerViewController.swift */,
 				FB3204E725F4F9EE000C82A3 /* PlaylistViewController.swift */,
 				FB3204EA25F4FA14000C82A3 /* SearchResultsViewController.swift */,
+				FB07A3352631346E00E8461D /* AlbumViewController.swift */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 				FBDE02C7262DA032003CA5D4 /* NewReleasesCellViewModel.swift in Sources */,
 				FBDE02DB262E8BF4003CA5D4 /* RecommendedTrackCellViewModel.swift in Sources */,
 				FB3204EB25F4FA14000C82A3 /* SearchResultsViewController.swift in Sources */,
+				FB07A3362631346E00E8461D /* AlbumViewController.swift in Sources */,
 				FBDE02D8262E8BAE003CA5D4 /* FeaturedPlaylistCellViewModel.swift in Sources */,
 				FB3204DC25F4F9B1000C82A3 /* WelcomeViewController.swift in Sources */,
 				FB3204E225F4F9D4000C82A3 /* ProfileViewController.swift in Sources */,
