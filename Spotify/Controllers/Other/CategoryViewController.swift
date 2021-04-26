@@ -1,23 +1,17 @@
 //
-//  SearchViewController.swift
+//  CategoryViewController.swift
 //  Spotify
 //
-//  Created by Евгений Никитин on 07.03.2021.
+//  Created by Евгений Никитин on 26.04.2021.
 //
 
 import UIKit
 
-class SearchViewController: UIViewController, UISearchResultsUpdating {
+class CategoryViewController: UIViewController {
 
-    let searchController: UISearchController = {
-        let vc = UISearchController(searchResultsController: SearchResultsViewController())
-        vc.searchBar.placeholder = "Songs, Artists, Albums"
-        vc.searchBar.searchBarStyle = .minimal
-        vc.definesPresentationContext = true
-        return vc
-    }()
+    let category: Category
     
-    private let collectionView: UICollectionView = UICollectionView(
+    private let collectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewCompositionalLayout(
             sectionProvider: { _, _ -> NSCollectionLayoutSection? in
@@ -28,24 +22,24 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
                     )
                 )
                 item.contentInsets = NSDirectionalEdgeInsets(
-                    top: 2,
-                    leading: 7,
-                    bottom: 2,
-                    trailing: 7
+                    top: 5,
+                    leading: 5,
+                    bottom: 5,
+                    trailing: 5
                 )
                 let group = NSCollectionLayoutGroup.horizontal(
                     layoutSize: NSCollectionLayoutSize(
                         widthDimension: .fractionalWidth(1),
-                        heightDimension: .absolute(150)
+                        heightDimension: .absolute(250)
                     ),
                     subitem: item,
                     count: 2
                 )
                 group.contentInsets = NSDirectionalEdgeInsets(
-                    top: 10,
-                    leading: 0,
-                    bottom: 10,
-                    trailing: 0
+                    top: 5,
+                    leading: 5,
+                    bottom: 5,
+                    trailing: 5
                 )
                 
                 return NSCollectionLayoutSection(group: group)
@@ -53,31 +47,42 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         )
     )
     
-    private var categories = [Category]()
+    
+    // MARK: Init
+    
+    init(category: Category) {
+        self.category = category
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+    
+    private var playlists = [Playlist]()
     
     
     // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemBackground
-        searchController.searchResultsUpdater = self
-        navigationItem.searchController = searchController
+        title = category.name
         view.addSubview(collectionView)
+        view.backgroundColor = .systemBackground
         
+        collectionView.backgroundColor = .systemBackground
         collectionView.register(
-            CategoryCollectionViewCell.self,
-            forCellWithReuseIdentifier: CategoryCollectionViewCell.identifier
+            FeaturedPlaylistCollectionViewCell.self,
+            forCellWithReuseIdentifier: FeaturedPlaylistCollectionViewCell.identifier
         )
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.backgroundColor = .systemBackground
         
-        APICaller.shared.getCategories { [weak self] result in
+        APICaller.shared.getCategoryPlaylists(category: category) { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
-                case .success(let categories):
-                    self?.categories = categories
+                case .success(let playlists):
+                    self?.playlists = playlists
                     self?.collectionView.reloadData()
                     
                 case .failure(let error):
@@ -91,40 +96,30 @@ class SearchViewController: UIViewController, UISearchResultsUpdating {
         super.viewDidLayoutSubviews()
         collectionView.frame = view.bounds
     }
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        guard let resultsController = searchController.searchResultsController as? SearchResultsViewController,
-              let query = searchController.searchBar.text,
-              !query.trimmingCharacters(in: .whitespaces).isEmpty else {
-            return
-        }
-    }
 }
 
 
-// MARK: Работа с Collection View
-extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSource {
-    
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
+// MARK: Работа с collection view
+extension CategoryViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return categories.count
+        return playlists.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: CategoryCollectionViewCell.identifier,
+                withReuseIdentifier: FeaturedPlaylistCollectionViewCell.identifier,
                 for: indexPath
-        ) as? CategoryCollectionViewCell else {
+        ) as? FeaturedPlaylistCollectionViewCell else {
             return UICollectionViewCell()
         }
-        let category = categories[indexPath.row]
+        
+        let playlist = playlists[indexPath.row]
         cell.configure(
-            with: CategoryCollectionViewCellViewModel(
-                title: category.name,
-                artworkURL: URL(string: category.icons.first?.url ?? "")
+            with: FeaturedPlaylistCellViewModel(
+                name: playlist.name,
+                artworkURL:URL(string: playlist.images.first?.url ?? ""),
+                creatorName: playlist.owner.display_name
             )
         )
         return cell
@@ -132,10 +127,8 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
-        let category = categories[indexPath.row]
-        let vc = CategoryViewController(category: category)
+        let vc = PlaylistViewController(playlist: playlists[indexPath.row])
         vc.navigationItem.largeTitleDisplayMode = .never
         navigationController?.pushViewController(vc, animated: true)
     }
 }
-
