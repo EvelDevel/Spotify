@@ -1,5 +1,5 @@
 //
-//  GenreCollectionViewCell.swift
+//  CategoryCollectionViewCell.swift
 //  Spotify
 //
 //  Created by Евгений Никитин on 25.04.2021.
@@ -10,11 +10,11 @@ import SDWebImage
 
 class CategoryCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = "GenreCollectionViewCell"
+    static let identifier = "CategoryCollectionViewCell"
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.tintColor = .white
         imageView.image = UIImage(
             systemName: "music.quarternote.3",
@@ -23,13 +23,15 @@ class CategoryCollectionViewCell: UICollectionViewCell {
                 weight: .regular
             )
         )
+        imageView.layer.masksToBounds = true
+        imageView.layer.cornerRadius = 8
         return imageView
     }()
     
     private let label: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = .systemFont(ofSize: 22, weight: .semibold)
+        label.font = .systemFont(ofSize: 20, weight: .semibold)
         return label
     }()
     
@@ -78,10 +80,11 @@ class CategoryCollectionViewCell: UICollectionViewCell {
             height: contentView.height / 2
         )
         imageView.frame = CGRect(
-            x: contentView.width / 2,
+            x: contentView.width / 1.9,
             y: 10,
-            width: contentView.width / 2,
-            height: contentView.height / 2)
+            width: contentView.width / 2.4,
+            height: contentView.height / 2
+        )
     }
     
     func configure(with viewModel: CategoryCollectionViewCellViewModel) {
