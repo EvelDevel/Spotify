@@ -37,11 +37,9 @@ final class APICaller {
                 }
                 do {
                     let result = try JSONDecoder().decode(AlbumDetailsResponse.self, from: data)
-                    print(result)
                     completion(.success(result))
                 }
                 catch {
-                    print(error)
                     completion(.failure(error))
                 }
             }
@@ -68,7 +66,6 @@ final class APICaller {
                     completion(.success(result))
                 }
                 catch {
-                    print(error)
                     completion(.failure(error))
                 }
             }
@@ -93,7 +90,6 @@ final class APICaller {
                     completion(.success(result))
                 }
                 catch {
-                    print(error.localizedDescription)
                     completion(.failure(error))
                 }
             }
@@ -209,6 +205,8 @@ final class APICaller {
     
     
     // MARK: Category
+    // https://developer.spotify.com/documentation/web-api/reference/#endpoint-get-a-category
+    
     public func getCategories(completion: @escaping (Result<[Category], Error>) -> Void) {
         createRequest(
             with: URL(string: Constants.baseAPIURL + "/browse/categories?limit=50"),
@@ -232,7 +230,9 @@ final class APICaller {
     }
     
     
-    // MARK: Category Playlists
+    // MARK: Category's Playlists
+    // https://developer.spotify.com/documentation/web-api/reference/#endpoint-get-a-categories-playlists
+    
     public func getCategoryPlaylists(category: Category, completion: @escaping (Result<[Playlist], Error>) -> Void) {
         createRequest(
             with: URL(string: Constants.baseAPIURL + "/browse/categories/\(category.id)/playlists?limit=50"),
@@ -257,7 +257,40 @@ final class APICaller {
     }
     
     
+    // MARK: Search
+    // https://developer.spotify.com/documentation/web-api/reference/#endpoint-search
     
+    public func search(with query: String, completion: @escaping (Result<[SearchResult], Error>) -> Void) {
+        createRequest(
+            with: URL(string: Constants.baseAPIURL + "/search?limit=10&type=album,artist,playlist,track&q=\(query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")"),
+            type: .GET
+        ) { request in
+            let task = URLSession.shared.dataTask(with: request) { data, _, error in
+                guard let data = data, error == nil else {
+                    completion(.failure(APIError.failedToGetData))
+                    return
+                }
+                do {
+                    let result = try JSONDecoder().decode(SearchResultsResponse.self, from: data)
+                    
+                    var searchResult: [SearchResult] = []
+                    searchResult.append(contentsOf: result.tracks.items.compactMap({ .track(model: $0) }))
+                    searchResult.append(contentsOf: result.artists.items.compactMap({ .artist(model: $0) }))
+                    searchResult.append(contentsOf: result.playlists.items.compactMap({ .playlist(model: $0) }))
+                    searchResult.append(contentsOf: result.albums.items.compactMap({ .album(model: $0) }))
+                    
+                    completion(.success(searchResult))
+                }
+                catch {
+                    completion(.failure(error))
+                }
+            }
+            task.resume()
+        }
+    }
+    
+    
+
     // MARK: - Private
     
     enum HTTPMethod: String {
