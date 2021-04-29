@@ -11,7 +11,7 @@ class WelcomeViewController: UIViewController {
 
     private let signInButton: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .white
+        button.backgroundColor = .systemGreen
         button.setTitle("Sign In With Spotify", for: .normal)
         button.setTitleColor(.black, for: .normal)
         return button
@@ -20,7 +20,7 @@ class WelcomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Spotify"
-        view.backgroundColor = .systemGreen
+        view.backgroundColor = .systemBackground
         view.addSubview(signInButton)
         signInButton.addTarget(self, action: #selector(didTapSignIn), for: .touchUpInside)
     }
