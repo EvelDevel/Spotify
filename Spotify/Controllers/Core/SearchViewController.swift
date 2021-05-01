@@ -175,7 +175,7 @@ extension SearchViewController: SearchResultsViewControllerDelegate {
             navigationController?.pushViewController(vc, animated: true)
             
         case .track(let track):
-            PlaybackPresenter.startPlayback(
+            PlaybackPresenter.shared.startPlayback(
                 from: self,
                 track: track
             )
