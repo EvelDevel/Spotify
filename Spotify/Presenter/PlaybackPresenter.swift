@@ -23,15 +23,13 @@ final class PlaybackPresenter {
     private var track: AudioTrack?
     private var tracks = [AudioTrack]()
     
+    var index = 0
+    
     var currentTrack: AudioTrack? {
         if let track = track, tracks.isEmpty {
             return track
         } else if let player = self.playerQueue, !tracks.isEmpty {
-            let item = player.currentItem
-            let items = player.items()
-            guard let index = items.firstIndex(where: { $0 == item }) else {
-                return nil
-            }
+            
             return tracks[index]
         }
         return nil
@@ -39,6 +37,7 @@ final class PlaybackPresenter {
     
     var player: AVPlayer?
     var playerQueue: AVQueuePlayer?
+    var playerVC: PlayerViewController?
     
     func startPlayback(
         from viewController: UIViewController,
@@ -60,6 +59,7 @@ final class PlaybackPresenter {
         viewController.present( UINavigationController(rootViewController: vc),  animated: true) { [weak self] in
             self?.player?.play()
         }
+        self.playerVC = vc
     }
     
     func startPlayback(
@@ -83,6 +83,7 @@ final class PlaybackPresenter {
         vc.delegate = self
         
         viewController.present(UINavigationController(rootViewController: vc), animated: true)
+        self.playerVC = vc
     }
 }
 
@@ -111,6 +112,8 @@ extension PlaybackPresenter: PlayerViewControllerDelegate {
             player?.pause()
         } else if let player = playerQueue {
             player.advanceToNextItem()
+            index += 1
+            playerVC?.refreshUI()
         }
     }
     
