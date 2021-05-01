@@ -7,10 +7,19 @@
 
 import UIKit
 import SDWebImage
+import AVFoundation
+
+protocol PlayerViewControllerDelegate: AnyObject {
+    func didTapPlayPause()
+    func didTapForward()
+    func didTapRewind()
+    func didSlideSlider(_ value: Float)
+}
 
 class PlayerViewController: UIViewController {
 
     weak var dataSource: PlayerDataSource?
+    weak var delegate: PlayerViewControllerDelegate?
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
@@ -58,6 +67,12 @@ class PlayerViewController: UIViewController {
     
     private func configure() {
         imageView.sd_setImage(with: dataSource?.imageURL, completed: nil)
+        controlsView.configure(
+            with: PlayerControlsViewViewModel(
+                title: dataSource?.songName,
+                subtitle: dataSource?.subtitle
+            )
+        )
     }
     
     private func configureBarButtons() {
@@ -86,14 +101,18 @@ class PlayerViewController: UIViewController {
 extension PlayerViewController: PlayerControlsViewDelegate {
     
     func playerControlsViewDidTapPlayPause(_ playerControlsView: PlayerControlsView) {
-        
+        delegate?.didTapPlayPause()
     }
     
     func playerControlsViewDidTapForward(_ playerControlsView: PlayerControlsView) {
-        
+        delegate?.didTapForward()
     }
     
     func playerControlsViewDidTapRewind(_ playerControlsView: PlayerControlsView) {
-        
+        delegate?.didTapRewind()
+    }
+    
+    func playerControlsView(_ playerControlsView: PlayerControlsView, didSlideSlider value: Float) {
+        delegate?.didSlideSlider(value)
     }
 }
